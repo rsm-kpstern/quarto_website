@@ -1,0 +1,9 @@
+---
+title: "This is Project 1"
+date: 2025-04-04
+---
+
+# This is project 2
+
+x = 10
+print(x)

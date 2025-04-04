@@ -1,0 +1,15 @@
+---
+title: "Kai's Stern"
+image: "Files/Portrait.jpg"
+about:
+    template: jolla
+    links:
+        - icon: envelope
+          href: mailto:kpstern@ucsd.edu
+        - icon: linkedin
+          href: https://www.linkedin.com/in/kai-stern
+---
+
+This is a Quarto website.
+
+To learn more about Quarto websites visit <https://quarto.org/docs/websites>.

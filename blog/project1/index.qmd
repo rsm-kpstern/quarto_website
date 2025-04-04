@@ -1,0 +1,22 @@
+---
+title: "This is Project 1"
+date: 2025-04-04
+---
+
+# This is project 1
+
+```{python}
+import matplotlib.pyplot as plt
+
+# Example data
+x = [1, 2, 3, 4, 5]
+y = [10, 8, 6, 4, 2]
+
+# Create scatter plot
+plt.scatter(x, y)
+plt.title("My Scatter Plot")
+plt.xlabel("X values")
+plt.ylabel("Y values")
+plt.grid(True)
+plt.show()
+```
