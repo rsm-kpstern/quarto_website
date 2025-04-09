@@ -1,6 +1,7 @@
 ---
 title: "This is Project 1"
 date: 2025-04-04
+description: "An intro project."
 ---
 
 # This is project 2

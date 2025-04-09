@@ -1,24 +1,10 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Kai’s Stern",
+    "objectID": "Projects.html",
+    "href": "Projects.html",
+    "title": "My Projects",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site"
-  },
-  {
-    "objectID": "resume.html",
-    "href": "resume.html",
-    "title": "Resume",
-    "section": "",
-    "text": "Download PDF file."
+    "text": "This is Project 1\n\n\n\n\n\n\n\n\n\nApr 4, 2025\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 1\n\n\n\n\n\n\n\n\n\nApr 4, 2025\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog.html",
@@ -26,19 +12,5 @@
     "title": "My Projects",
     "section": "",
     "text": "This is Project 1\n\n\n\n\n\n\n\n\n\nApr 4, 2025\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 1\n\n\n\n\n\n\n\n\n\nApr 4, 2025\n\n\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "blog/project2/index.html",
-    "href": "blog/project2/index.html",
-    "title": "This is project 1",
-    "section": "",
-    "text": "This is project 1\nx = 10 print(x)"
-  },
-  {
-    "objectID": "blog/project1/index.html",
-    "href": "blog/project1/index.html",
-    "title": "This is Project 1",
-    "section": "",
-    "text": "This is project 1\nx = 4 print(x)"
   }
 ]
