@@ -220,7 +220,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="data">Data</h2>
 <section id="description" class="level3">
 <h3 class="anchored" data-anchor-id="description">Description</h3>
-<div id="a00ea71e" class="cell" data-execution_count="1">
+<div id="daccb216" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
@@ -702,7 +702,7 @@ Variable Definitions
 <section id="balance-test" class="level3">
 <h3 class="anchored" data-anchor-id="balance-test">Balance Test</h3>
 <p>As an ad hoc test of the randomization mechanism, I provide a series of tests that compare aspects of the treatment and control groups to assess whether they are statistically significantly different from one another.</p>
-<div id="8c972f1a" class="cell" data-execution_count="2">
+<div id="9ea2eec4" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define variables to test</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>variables <span class="op">=</span> {</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"pwhite"</span>: <span class="st">"Proportion White"</span>,</span>
@@ -801,7 +801,7 @@ Variable Definitions
 <section id="charitable-contribution-made" class="level3">
 <h3 class="anchored" data-anchor-id="charitable-contribution-made">Charitable Contribution Made</h3>
 <p>First, I analyze whether matched donations lead to an increased response rate of making a donation.</p>
-<div id="aad043a9" class="cell" data-execution_count="3">
+<div id="99fca5e7" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate donation rates</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>response_rates <span class="op">=</span> df.groupby(<span class="st">'treatment'</span>)[<span class="st">'gave'</span>].mean()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">'Control'</span>, <span class="st">'Treatment'</span>]</span>
@@ -824,7 +824,7 @@ Variable Definitions
 </div>
 </div>
 <p>The bar charts demonstrate an approximately 5% difference between the proportions of donors in the treatment and control groups. The control group is made up of around 17% of donors while the treatment group is around 22%.</p>
-<div id="53e6a46e" class="cell" data-execution_count="4">
+<div id="d07069bf" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset data</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>gave_treat <span class="op">=</span> df[df[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'gave'</span>]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>gave_control <span class="op">=</span> df[df[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">0</span>][<span class="st">'gave'</span>]</span>
@@ -871,7 +871,7 @@ Variable Definitions
 </div>
 <p>I tested whether people who received a fundraising letter with a matching donation offer were more likely to donate compared to those who received a standard letter. A t-test shows that the treatment group had a statistically significantly higher donation rate than the control group. This result is confirmed by a linear regression, where the coefficient on the treatment variable closely matches the observed difference in means and is statistically significant.</p>
 <p>In practical terms, just mentioning that a matching donation is available makes people more likely to give. Even a small change in framing (e.g., adding a single paragraph about a match) meaningfully influences behavior. This supports the idea that people are motivated not just by the financial impact of their gift, but by social signals like the opportunity to “unlock” funds from another donor. It also reinforces how seemingly minor tweaks in messaging can have outsized effects in fundraising campaigns.</p>
-<div id="47cfd064" class="cell" data-execution_count="5">
+<div id="827b59b1" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> summarize_model(model, dep_var<span class="op">=</span><span class="st">"y"</span>):</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    coef <span class="op">=</span> model.params</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    se <span class="op">=</span> model.bse</span>
@@ -901,7 +901,7 @@ Variable Definitions
 <span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>        ci_upper <span class="op">=</span> ci.loc[var, <span class="dv">1</span>]</span>
 <span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"| </span><span class="sc">{</span>var<span class="sc">:&lt;10}</span><span class="ss"> | </span><span class="sc">{</span>coef[var]<span class="sc">:&gt;11.4f}</span><span class="ss"> | </span><span class="sc">{</span>se[var]<span class="sc">:&gt;10.4f}</span><span class="ss"> | </span><span class="sc">{</span>zval[var]<span class="sc">:&gt;9.2f}</span><span class="ss"> | </span><span class="sc">{</span>pval[var]<span class="sc">:&gt;7.4f}</span><span class="ss"> | [</span><span class="sc">{</span>ci_lower<span class="sc">:.3f}</span><span class="ss">, </span><span class="sc">{</span>ci_upper<span class="sc">:.3f}</span><span class="ss">] |"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="169dd688" class="cell" data-execution_count="6">
+<div id="439e4538" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Probit regression</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>probit_model <span class="op">=</span> smf.probit(<span class="st">'gave ~ treatment'</span>, data<span class="op">=</span>df).fit()</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>summarize_model(probit_model, <span class="st">'gave'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -928,7 +928,7 @@ Variable Definitions
 <section id="differences-between-match-rates" class="level3">
 <h3 class="anchored" data-anchor-id="differences-between-match-rates">Differences between Match Rates</h3>
 <p>Next, I assess the effectiveness of different sizes of matched donations on the response rate.</p>
-<div id="b14757fb" class="cell" data-execution_count="7">
+<div id="5393d9cf" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Limit to only people who received a treatment letter (match offered)</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>treated <span class="op">=</span> df[df[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>]</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -966,7 +966,7 @@ Variable Definitions
 </div>
 <p>To assess whether larger match ratios increase donation rates, I performed a series of t-tests comparing response rates among individuals assigned to 1:1, 2:1, and 3:1 match treatment groups. The donation rate was approximately 2.07% for the 1:1 group, 2.26% for 2:1, and 2.27% for 3:1. Although there is a small increase in the average response rate as the match ratio increases, none of the differences are statistically significant: the p-value comparing 2:1 to 1:1 is 0.335, and for 3:1 vs.&nbsp;2:1 it is 0.960. Even the largest comparison (3:1 vs.&nbsp;1:1) yields a p-value of 0.310, far above the conventional 0.05 threshold for significance.</p>
 <p>These results support the authors’ “figures suggest” comment on page 8 of the paper: while the raw response rates rise slightly with higher match ratios, the increases are not statistically meaningful. This suggests that once a match is offered, increasing the size of that match even up to 3:1 does not further motivate donors to give</p>
-<div id="ecf9682f" class="cell" data-execution_count="8">
+<div id="a90ab25f" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>treated <span class="op">=</span> df[df[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>].copy()</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create dummy variables </span></span>
@@ -991,7 +991,7 @@ Variable Definitions
 </div>
 </div>
 <p>To assess whether the size of the match ratio influenced donation behavior, I regressed the binary outcome variable gave on dummy variables for 2:1 and 3:1 match ratios, using the 1:1 match as the baseline. The results show that neither the 2:1 nor 3:1 match ratios had a statistically significant effect on the likelihood of donating compared to the 1:1 match. The coefficient for ratio2 was 0.0019 (p = 0.338), and for ratio3 it was 0.0020 (p = 0.313), both with confidence intervals that include zero. The intercept, representing the baseline 1:1 match group, was 0.0207, consistent with earlier descriptive statistics. These findings confirm that increasing the size of the match beyond 1:1 does not meaningfully increase donation rates, reinforcing the paper’s conclusion that the presence of a match offer matters more than its size.</p>
-<div id="70b1b24d" class="cell" data-execution_count="9">
+<div id="7dc76a2c" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mean_1 <span class="op">=</span> gave_1to1.mean()</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>mean_2 <span class="op">=</span> gave_2to1.mean()</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>mean_3 <span class="op">=</span> gave_3to1.mean()</span>
@@ -1026,7 +1026,7 @@ Variable Definitions
 <section id="size-of-charitable-contribution" class="level3">
 <h3 class="anchored" data-anchor-id="size-of-charitable-contribution">Size of Charitable Contribution</h3>
 <p>In this subsection, I analyze the effect of the size of matched donation on the size of the charitable contribution.</p>
-<div id="aa4b6a76" class="cell" data-execution_count="10">
+<div id="dad9ffab" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bivariate regression: total amount donated ~ treatment</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>amount_reg <span class="op">=</span> smf.ols(<span class="st">'amount ~ treatment'</span>, data<span class="op">=</span>df).fit()</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>summarize_model(amount_reg, <span class="st">'amount'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1042,7 +1042,7 @@ Variable Definitions
 </div>
 </div>
 <p>To assess whether offering a matching donation influenced not just the likelihood of giving but also the amount donated, I regressed the dollar amount of contributions on the treatment assignment indicator. The results show that the average donation in the control group was $0.81, as reflected in the intercept. Individuals in the treatment group gave $0.15 more on average, though this difference is not statistically significant at the 5% level (p = 0.063). While the coefficient is positive and suggestive of a modest increase in donation size, the lack of statistical significance means we cannot confidently conclude that the treatment had a reliable effect on donation amounts. This suggests that the primary effect of the matching offer was to increase participation, rather than the average amount given per donor.</p>
-<div id="243a56f8" class="cell" data-execution_count="11">
+<div id="6fe51237" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>donors <span class="op">=</span> df[df[<span class="st">'gave'</span>]<span class="op">&gt;</span><span class="dv">0</span>]</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>amount_reg2 <span class="op">=</span> smf.ols(<span class="st">'amount ~ treatment'</span>, data<span class="op">=</span>donors).fit()</span>
@@ -1061,7 +1061,7 @@ Variable Definitions
 </div>
 </div>
 <p>To understand whether the treatment influenced how much people donated, conditional on having donated, I restricted the dataset to individuals who made a donation (gave &gt; 0) and regressed amount on the treatment indicator. The results show that the average donation amount in the control group was approximately $45.54, while the treatment group gave $1.67 less on average, according to the regression coefficient. However, this difference is not statistically significant (p = 0.561), and the 95% confidence interval includes zero (−7.31 to 3.97). This indicates that among those who did choose to donate, being offered a matching grant did not significantly affect the donation amount.</p>
-<div id="df8271a4" class="cell" data-execution_count="12">
+<div id="06e4587f" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Separate treatment and control donors</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>treat_donors <span class="op">=</span> donors[donors[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'amount'</span>]</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>control_donors <span class="op">=</span> donors[donors[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">0</span>][<span class="st">'amount'</span>]</span>
@@ -1110,7 +1110,7 @@ Variable Definitions
 <p>Further suppose that the true distribution of respondents who do get a charitable donation match of any size is Bernoulli with probability p=0.022 that a donation is made.</p>
 <section id="law-of-large-numbers" class="level3">
 <h3 class="anchored" data-anchor-id="law-of-large-numbers">Law of Large Numbers</h3>
-<div id="3f2baa53" class="cell" data-execution_count="13">
+<div id="46dafc92" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1148,7 +1148,7 @@ Variable Definitions
 </section>
 <section id="central-limit-theorem" class="level3">
 <h3 class="anchored" data-anchor-id="central-limit-theorem">Central Limit Theorem</h3>
-<div id="30b5cb2c" class="cell" data-execution_count="14">
+<div id="2342ddee" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>

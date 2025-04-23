@@ -1,9 +1,12 @@
 ---
 title: "My Projects"
 listing:
-    contents: blog
-    type: grid
-    sort: "date desc"
-    categories: false 
+  contents:
+    - blog/project1/index.qmd
+    - blog/project2/index.qmd
+  type: grid
+  sort: "date desc"
+  categories: false
 ---
+
 
