@@ -3,7 +3,6 @@ title: "Poisson Regression Examples"
 author: "Kai Stern"
 date: 05/07/2025
 callout-appearance: minimal # this hides the blue "i" icon on .callout-notes
-echo: False
 ---
 
 
