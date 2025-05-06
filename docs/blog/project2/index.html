@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-04-04">
-<meta name="description" content="An intro project.">
+<meta name="author" content="Kai Stern">
+<meta name="dcterms.date" content="2025-05-07">
 
-<title>This is Project 1 – Kai’s Website</title>
+<title>Poisson Regression Examples – Kai’s Website</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -118,7 +147,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#this-is-project-2" id="toc-this-is-project-2" class="nav-link active" data-scroll-target="#this-is-project-2">This is project 2</a></li>
+  <li><a href="#blueprinty-case-study" id="toc-blueprinty-case-study" class="nav-link active" data-scroll-target="#blueprinty-case-study">Blueprinty Case Study</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#estimation-of-simple-poisson-model" id="toc-estimation-of-simple-poisson-model" class="nav-link" data-scroll-target="#estimation-of-simple-poisson-model">Estimation of Simple Poisson Model</a></li>
+  <li><a href="#estimation-of-poisson-regression-model" id="toc-estimation-of-poisson-regression-model" class="nav-link" data-scroll-target="#estimation-of-poisson-regression-model">Estimation of Poisson Regression Model</a></li>
+  </ul></li>
+  <li><a href="#airbnb-case-study" id="toc-airbnb-case-study" class="nav-link" data-scroll-target="#airbnb-case-study">AirBnB Case Study</a>
+  <ul class="collapse">
+  <li><a href="#introduction-1" id="toc-introduction-1" class="nav-link" data-scroll-target="#introduction-1">Introduction</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -127,23 +166,24 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">This is Project 1</h1>
+<h1 class="title">Poisson Regression Examples</h1>
 </div>
 
-<div>
-  <div class="description">
-    An intro project.
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Kai Stern </p>
+          </div>
+  </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 4, 2025</p>
+      <p class="date">May 7, 2025</p>
     </div>
   </div>
   
@@ -155,11 +195,243 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="this-is-project-2" class="level1">
-<h1>This is project 2</h1>
-<p>x = 10 print(x)</p>
+<section id="blueprinty-case-study" class="level2">
+<h2 class="anchored" data-anchor-id="blueprinty-case-study">Blueprinty Case Study</h2>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<p>Blueprinty is a small firm that makes software for developing blueprints specifically for submitting patent applications to the US patent office. Their marketing team would like to make the claim that patent applicants using Blueprinty’s software are more successful in getting their patent applications approved. Ideal data to study such an effect might include the success rate of patent applications before using Blueprinty’s software and after using it. Unfortunately, such data is not available.</p>
+<p>However, Blueprinty has collected data on 1,500 mature (non-startup) engineering firms. The data include each firm’s number of patents awarded over the last 5 years, regional location, age since incorporation, and whether or not the firm uses Blueprinty’s software. The marketing team would like to use this data to make the claim that firms using Blueprinty’s software are more successful in getting their patent applications approved.</p>
+</section>
+<section id="data" class="level3">
+<h3 class="anchored" data-anchor-id="data">Data</h3>
+<div id="77d780d2" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-stdout">
+<pre><code>The history saving thread hit an unexpected error (DatabaseError('database disk image is malformed')).History will not be written to the database.</code></pre>
+</div>
+</div>
+<div id="1cf54577" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-stdout">
+<pre><code>The mean number of patents for customers is 4.133056133056133 while the mean for non-patients is 3.4730127576054954</code></pre>
+</div>
+</div>
+<div id="df04eed9" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-5-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The histograms show that both customers and non-customers have right-skewed distributions of patent counts, with most values concentrated below 6. Customers peak around 4 patents, while non-customers peak slightly lower, around 2–3. The mean number of patents is higher for customers (4.13) than for non-customers (3.47), suggesting that customers tend to be slightly more innovation-active. Despite a larger sample size among non-customers, the customer group shows a modest upward shift in patent ownership.</p>
+<p>Blueprinty customers are not selected at random. It may be important to account for systematic differences in the age and regional location of customers vs non-customers.</p>
+<div id="28cedd06" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The regional distribution of customers and non-customers is clearly imbalanced. The Northeast region stands out with more customers than non-customers, while all other regions have significantly fewer customers. This suggests that customer status is not randomly distributed across regions and regional factors may influence Blueprinty selection.</p>
+<div id="29fe985a" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The boxplot shows that customers tend to be slightly older than non-customers on average, with a modest upward shift in median age. Both groups have similar spreads and ranges, though customers show slightly higher values at the upper quartile. This indicates age may play a small but non-negligible role in customer selection.</p>
+</section>
+<section id="estimation-of-simple-poisson-model" class="level3">
+<h3 class="anchored" data-anchor-id="estimation-of-simple-poisson-model">Estimation of Simple Poisson Model</h3>
+<p>Since our outcome variable of interest can only be small integer values per a set unit of time, we can use a Poisson density to model the number of patents awarded to each engineering firm over the last 5 years. We start by estimating a simple Poisson model via Maximum Likelihood.</p>
+<p>The likelihood function for independent observations ( Y_1, , Y_n (_i) ) is:</p>
+<p><span class="math display">\[
+\mathcal{L}(\beta) = \prod_{i=1}^n \frac{e^{-\lambda_i} \lambda_i^{Y_i}}{Y_i!} = \prod_{i=1}^n \frac{e^{-e^{X_i^\top \beta}} \left(e^{X_i^\top \beta}\right)^{Y_i}}{Y_i!}
+\]</span></p>
+<p>Taking the log of the likelihood gives the log-likelihood:</p>
+<p><span class="math display">\[
+\ell(\beta) = \sum_{i=1}^n \left[ Y_i X_i^\top \beta - e^{X_i^\top \beta} - \log(Y_i!) \right]
+\]</span></p>
+<p>I implement this function below in python.</p>
+<div id="a42475d5" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The log-likelihood curve rises sharply at low values of λ, peaks around the sample mean of patent counts (approximately 4), and then gradually declines reflecting the typical shape of a Poisson likelihood. The red dashed line marks the maximum likelihood estimate for λ, which corresponds to the value that best explains the observed data under the Poisson model.</p>
+<div id="6a306136" class="cell" data-execution_count="9">
+<div class="cell-output cell-output-stdout">
+<pre><code>MLE for λ: 3.6847</code></pre>
+</div>
+</div>
+<p>The MLE is 3.6847 which is aligns with the graphical output above and makes sense given our understanding of the data up to this point.</p>
+</section>
+<section id="estimation-of-poisson-regression-model" class="level3">
+<h3 class="anchored" data-anchor-id="estimation-of-poisson-regression-model">Estimation of Poisson Regression Model</h3>
+<p>Next, we extend our simple Poisson model to a Poisson Regression Model such that <span class="math inline">\(Y_i = \text{Poisson}(\lambda_i)\)</span> where <span class="math inline">\(\lambda_i = \exp(X_i'\beta)\)</span>. The interpretation is that the success rate of patent awards is not constant across all firms (<span class="math inline">\(\lambda\)</span>) but rather is a function of firm characteristics <span class="math inline">\(X_i\)</span>. Specifically, we will use the covariates age, age squared, region, and whether the firm is a customer of Blueprinty.</p>
+<div id="0041a514" class="cell" data-execution_count="13">
+<div class="cell-output cell-output-stdout">
+<pre><code>                  Coefficient  Std. Error
+const               -0.329507    0.179246
+age                  0.137006    0.013514
+age_squared         -0.002764    0.000249
+iscustomer           0.214490    0.030893
+region_Northeast    -0.013539    0.043277
+region_Northwest    -0.053201    0.053562
+region_South         0.022149    0.052401
+region_Southwest     0.042996    0.046625</code></pre>
+</div>
+</div>
+<div id="be46bd8f" class="cell" data-execution_count="14">
+<div class="cell-output cell-output-stdout">
+<pre><code>                 Generalized Linear Model Regression Results                  
+==============================================================================
+Dep. Variable:                patents   No. Observations:                 1500
+Model:                            GLM   Df Residuals:                     1492
+Model Family:                 Poisson   Df Model:                            7
+Link Function:                    Log   Scale:                          1.0000
+Method:                          IRLS   Log-Likelihood:                -3258.1
+Date:                Tue, 06 May 2025   Deviance:                       2143.3
+Time:                        13:24:12   Pearson chi2:                 2.07e+03
+No. Iterations:                     5   Pseudo R-squ. (CS):             0.1360
+Covariance Type:            nonrobust                                         
+====================================================================================
+                       coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------------
+const               -0.5089      0.183     -2.778      0.005      -0.868      -0.150
+age                  0.1486      0.014     10.716      0.000       0.121       0.176
+age_squared         -0.0030      0.000    -11.513      0.000      -0.003      -0.002
+iscustomer           0.2076      0.031      6.719      0.000       0.147       0.268
+region_Northeast     0.0292      0.044      0.669      0.504      -0.056       0.115
+region_Northwest    -0.0176      0.054     -0.327      0.744      -0.123       0.088
+region_South         0.0566      0.053      1.074      0.283      -0.047       0.160
+region_Southwest     0.0506      0.047      1.072      0.284      -0.042       0.143
+====================================================================================</code></pre>
+</div>
+</div>
+<p>The Poisson regression results suggest that age, age squared, and iscustomer status are significant predictors of the number of patents held, while regional differences are not statistically significant. Specifically, age has a positive coefficient (0.149), but the negative coefficient on age_squared (−0.003) indicates a concave relationship: the expected patent count increases with age at a decreasing rate. Being a customer is associated with a ~21% increase in expected patents (exp(0.208) ≈ 1.23), and this effect is highly significant. The intercept is also significant, while all regional indicators have large p-values (p &gt; 0.28), suggesting no strong regional differences in patent counts after accounting for other variables. The pseudo R-squared (0.136) indicates a modest fit.</p>
+<div id="6eb5dd63" class="cell" data-execution_count="15">
+<div class="cell-output cell-output-stdout">
+<pre><code>Average marginal effect of Blueprinty's software on expected patent count: 0.793</code></pre>
+</div>
+</div>
+<p>On average, being a Blueprinty customer is associated with 0.793 more expected patents per firm, holding all other characteristics constant. This suggests a substantive positive impact of the software on firms’ innovation output, assuming the model is well-specified and the number of patents is a good outcome measure.</p>
+</section>
+</section>
+<section id="airbnb-case-study" class="level2">
+<h2 class="anchored" data-anchor-id="airbnb-case-study">AirBnB Case Study</h2>
+<section id="introduction-1" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-1">Introduction</h3>
+<p>AirBnB is a popular platform for booking short-term rentals. In March 2017, students Annika Awad, Evan Lebo, and Anna Linden scraped of 40,000 Airbnb listings from New York City. The data include the following variables:</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Variable Definitions
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre><code>- `id` = unique ID number for each unit
+- `last_scraped` = date when information scraped
+- `host_since` = date when host first listed the unit on Airbnb
+- `days` = `last_scraped` - `host_since` = number of days the unit has been listed
+- `room_type` = Entire home/apt., Private room, or Shared room
+- `bathrooms` = number of bathrooms
+- `bedrooms` = number of bedrooms
+- `price` = price per night (dollars)
+- `number_of_reviews` = number of reviews for the unit on Airbnb
+- `review_scores_cleanliness` = a cleanliness score from reviews (1-10)
+- `review_scores_location` = a "quality of location" score from reviews (1-10)
+- `review_scores_value` = a "quality of value" score from reviews (1-10)
+- `instant_bookable` = "t" if instantly bookable, "f" if not</code></pre>
+</div>
+</div>
+</div>
+<div id="44ea5ebc" class="cell" data-execution_count="17">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The histogram above shows that the majority of Airbnb listings have very few reviews, with a sharp right skew. Most units have fewer than 20 reviews, and a small number of listings have over 100, suggesting that a small subset of units receives a disproportionately high number of bookings (as proxied by reviews). This kind of distribution is typical in count data and justifies the use of a Poisson model for further analysis.</p>
+<div id="c46ae831" class="cell" data-execution_count="18">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This boxplot shows the distribution of review counts across different room types. Entire homes/apartments and private rooms tend to receive more reviews on average than shared rooms, though all three room types have long upper tails indicating occasional listings with very high activity. The median number of reviews is relatively low across all categories, but shared rooms appear to have the fewest reviews overall, suggesting lower demand or usage compared to other room types.</p>
+<div id="70747b8a" class="cell" data-execution_count="19">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This scatterplot shows a strong negative relationship between price and number of reviews, suggesting that higher-priced listings tend to receive fewer bookings,as proxied by reviews. Most listings are clustered at lower price points with higher review counts, while units priced above ~$500 see a sharp drop-off in review volume. This indicates that guests may be more price-sensitive and that extremely high-priced units are rarely booked.</p>
+<div id="a6cdf420" class="cell" data-execution_count="20">
+<div class="cell-output cell-output-stdout">
+<pre><code>                 Generalized Linear Model Regression Results                  
+==============================================================================
+Dep. Variable:      number_of_reviews   No. Observations:                30140
+Model:                            GLM   Df Residuals:                    30129
+Model Family:                 Poisson   Df Model:                           10
+Link Function:                    Log   Scale:                          1.0000
+Method:                          IRLS   Log-Likelihood:            -4.9041e+05
+Date:                Tue, 06 May 2025   Deviance:                   8.5945e+05
+Time:                        13:24:12   Pearson chi2:                 1.18e+06
+No. Iterations:                     6   Pseudo R-squ. (CS):             0.9655
+Covariance Type:            nonrobust                                         
+=============================================================================================
+                                coef    std err          z      P&gt;|z|      [0.025      0.975]
+---------------------------------------------------------------------------------------------
+const                         2.9427      0.017    176.920      0.000       2.910       2.975
+days                          0.0005   1.86e-06    280.430      0.000       0.001       0.001
+bathrooms                    -0.1134      0.004    -30.067      0.000      -0.121      -0.106
+bedrooms                      0.0757      0.002     37.214      0.000       0.072       0.080
+price                     -4.302e-05   8.27e-06     -5.199      0.000   -5.92e-05   -2.68e-05
+review_scores_cleanliness     0.1110      0.002     73.159      0.000       0.108       0.114
+review_scores_location       -0.0815      0.002    -50.403      0.000      -0.085      -0.078
+review_scores_value          -0.0911      0.002    -49.311      0.000      -0.095      -0.087
+instant_bookable              0.4591      0.003    157.293      0.000       0.453       0.465
+room_type_Private room        0.0192      0.003      7.025      0.000       0.014       0.025
+room_type_Shared room        -0.1152      0.009    -13.318      0.000      -0.132      -0.098
+=============================================================================================</code></pre>
+</div>
+</div>
+<p>This Poisson regression model examines how various listing characteristics influence the number of reviews on Airbnb, used here as a proxy for bookings. The results indicate that listings active for a longer period (days) tend to accumulate more reviews, as expected. Larger listings, as measured by the number of bedrooms, are also associated with more bookings, while listings with more bathrooms are surprisingly linked to fewer reviews, possibly reflecting reduced demand for larger or more expensive properties. Price has a small but statistically significant negative effect, confirming that higher nightly rates are generally associated with fewer bookings.</p>
+<p>Among review-based quality metrics, cleanliness stands out with a strong positive effect, indicating that guests reward cleaner properties with more bookings. Interestingly, higher scores for location and value are associated with fewer reviews, which may reflect unobserved factors. For example, budget properties in less central locations may be rated as better “value” but still attract fewer bookings overall. The ability to book instantly is associated with a substantial increase in review volume, suggesting that convenience is a major driver of guest behavior. Lastly, compared to entire homes, private rooms receive slightly more reviews, while shared rooms receive significantly fewer, highlighting differences in demand by room type.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
