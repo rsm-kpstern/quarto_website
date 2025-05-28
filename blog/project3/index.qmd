@@ -2,7 +2,9 @@
 title: "Multinomial Logit Model"
 author: "Kai Stern"
 date: 05/28/2025
-format: pdf
+format:
+  html: default
+  pdf: default
 ---
 
 
