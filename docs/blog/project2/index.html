@@ -238,7 +238,7 @@ window.Quarto = {
 </section>
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
-<div id="7611b66a" class="cell" data-execution_count="1">
+<div id="d33fc42c" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -250,12 +250,12 @@ window.Quarto = {
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> gammaln</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="553b9cef" class="cell" data-execution_count="2">
+<div id="7657addf" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>blueprint <span class="op">=</span> pd.read_csv(<span class="st">"/Users/kaistern/Documents/MGTA_Data/MGTA_Marketing_Analytics/quarto_website/blog/project2/blueprinty.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>airbnb <span class="op">=</span> pd.read_csv(<span class="st">"/Users/kaistern/Documents/MGTA_Data/MGTA_Marketing_Analytics/quarto_website/blog/project2/airbnb.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="203e9f02" class="cell" data-execution_count="3">
+<div id="ab1520e5" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>custs <span class="op">=</span> blueprint[blueprint[<span class="st">'iscustomer'</span>]<span class="op">==</span><span class="dv">1</span>]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>non_custs <span class="op">=</span> blueprint[blueprint[<span class="st">'iscustomer'</span>]<span class="op">==</span><span class="dv">0</span>]</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -267,7 +267,7 @@ window.Quarto = {
 <pre><code>The mean number of patents for customers is 4.133056133056133 while the mean for non-patients is 3.4730127576054954</code></pre>
 </div>
 </div>
-<div id="116c02b5" class="cell" data-execution_count="4">
+<div id="e34e4e64" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.hist(custs[<span class="st">'patents'</span>], bins<span class="op">=</span><span class="dv">30</span>, color<span class="op">=</span><span class="st">'skyblue'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Patent Distribution - Customers"</span>)</span>
@@ -303,7 +303,7 @@ window.Quarto = {
 </div>
 <p>The histograms show that both customers and non-customers have right-skewed distributions of patent counts, with most values concentrated below 6. Customers peak around 4 patents, while non-customers peak slightly lower, around 2–3. The mean number of patents is higher for customers (4.13) than for non-customers (3.47), suggesting that customers tend to be slightly more innovation-active. Despite a larger sample size among non-customers, the customer group shows a modest upward shift in patent ownership.</p>
 <p>Blueprinty customers are not selected at random. It may be important to account for systematic differences in the age and regional location of customers vs non-customers.</p>
-<div id="98d16075" class="cell" data-execution_count="5">
+<div id="6770872f" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>blueprint, x<span class="op">=</span><span class="st">'region'</span>, hue<span class="op">=</span><span class="st">'iscustomer'</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Customer vs Non-Customer Counts by Region"</span>)</span>
@@ -322,7 +322,7 @@ window.Quarto = {
 </div>
 </div>
 <p>The regional distribution of customers and non-customers is clearly imbalanced. The Northeast region stands out with more customers than non-customers, while all other regions have significantly fewer customers. This suggests that customer status is not randomly distributed across regions and regional factors may influence Blueprinty selection.</p>
-<div id="75e7fcde" class="cell" data-execution_count="6">
+<div id="fa5a5648" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>blueprint, x<span class="op">=</span><span class="st">'iscustomer'</span>, y<span class="op">=</span><span class="st">'age'</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Age Distribution by Customer Status"</span>)</span>
@@ -353,7 +353,7 @@ window.Quarto = {
 \ell(\beta) = \sum_{i=1}^n \left[ Y_i X_i^\top \beta - e^{X_i^\top \beta} - \log(Y_i!) \right]
 \]</span></p>
 <p>I implement this function below in python.</p>
-<div id="b359d679" class="cell" data-execution_count="7">
+<div id="922edebe" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_factorial(y):</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array([np.<span class="bu">sum</span>(np.log(np.arange(<span class="dv">1</span>, <span class="bu">int</span>(yi)<span class="op">+</span><span class="dv">1</span>))) <span class="cf">if</span> yi <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span> <span class="cf">for</span> yi <span class="kw">in</span> y])</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -365,7 +365,7 @@ window.Quarto = {
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    log_likelihood <span class="op">=</span> <span class="op">-</span>n <span class="op">*</span> lambd <span class="op">+</span> np.<span class="bu">sum</span>(y <span class="op">*</span> np.log(lambd)) <span class="op">-</span> np.<span class="bu">sum</span>(log_fact)</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> log_likelihood</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="1404bb2f" class="cell" data-execution_count="8">
+<div id="833a5fac" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> blueprint[<span class="st">'patents'</span>].values  </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>lambda_vals <span class="op">=</span> np.linspace(<span class="fl">0.1</span>, <span class="dv">10</span>, <span class="dv">200</span>)  </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -391,7 +391,7 @@ window.Quarto = {
 </div>
 </div>
 <p>The log-likelihood curve rises sharply at low values of λ, peaks around the sample mean of patent counts (approximately 4), and then gradually declines reflecting the typical shape of a Poisson likelihood. The red dashed line marks the maximum likelihood estimate for λ, which corresponds to the value that best explains the observed data under the Poisson model.</p>
-<div id="2fa79ac0" class="cell" data-execution_count="9">
+<div id="457c506d" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> blueprint[<span class="st">'patents'</span>].values</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>objective <span class="op">=</span> <span class="kw">lambda</span> lam: <span class="op">-</span>poisson_log_likelihood(lam, Y)</span>
@@ -409,7 +409,7 @@ window.Quarto = {
 <section id="estimation-of-poisson-regression-model" class="level3">
 <h3 class="anchored" data-anchor-id="estimation-of-poisson-regression-model">Estimation of Poisson Regression Model</h3>
 <p>Next, we extend our simple Poisson model to a Poisson Regression Model such that <span class="math inline">\(Y_i = \text{Poisson}(\lambda_i)\)</span> where <span class="math inline">\(\lambda_i = \exp(X_i'\beta)\)</span>. The interpretation is that the success rate of patent awards is not constant across all firms (<span class="math inline">\(\lambda\)</span>) but rather is a function of firm characteristics <span class="math inline">\(X_i\)</span>. Specifically, we will use the covariates age, age squared, region, and whether the firm is a customer of Blueprinty.</p>
-<div id="4df30bf2" class="cell" data-execution_count="10">
+<div id="5b589fc2" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poisson_regression_log_likelihood(beta, X, y):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    beta <span class="op">=</span> np.atleast_1d(beta)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> np.asarray(X)</span>
@@ -422,12 +422,12 @@ window.Quarto = {
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>(y <span class="op">*</span> eta <span class="op">-</span> lambdas <span class="op">-</span> log_fact)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="e223d2a6" class="cell" data-execution_count="11">
+<div id="d81bf8ff" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poisson_loglik(beta, X, y):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    eta <span class="op">=</span> X <span class="op">@</span> beta</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(y[i]<span class="op">*</span>eta[i] <span class="op">-</span> math.exp(<span class="bu">min</span>(eta[i], <span class="dv">700</span>)) <span class="op">-</span> gammaln(y[i]<span class="op">+</span><span class="dv">1</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(y)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="5fe2fa34" class="cell" data-execution_count="12">
+<div id="889b1a54" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_poisson(df, y_col, features):</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> sm.add_constant(df[features]).values</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> df[y_col].values</span>
@@ -469,7 +469,7 @@ window.Quarto = {
 <span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>        <span class="st">'log_likelihood'</span>: <span class="op">-</span>res.fun</span>
 <span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="6ce5f0b2" class="cell" data-execution_count="13">
+<div id="cb61130d" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> blueprint.copy()</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'age_squared'</span>] <span class="op">=</span> df[<span class="st">'age'</span>] <span class="op">**</span> <span class="dv">2</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.get_dummies(df, columns<span class="op">=</span>[<span class="st">'region'</span>], drop_first<span class="op">=</span><span class="va">True</span>)</span>
@@ -489,7 +489,7 @@ region_South         0.022149    0.052401
 region_Southwest     0.042996    0.046625</code></pre>
 </div>
 </div>
-<div id="80bf14b1" class="cell" data-execution_count="14">
+<div id="7e93e8a2" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [<span class="st">'age'</span>, <span class="st">'age_squared'</span>, <span class="st">'iscustomer'</span>] <span class="op">+</span> [col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> col.startswith(<span class="st">'region_'</span>)]</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> sm.add_constant(df[features]).astype(<span class="bu">float</span>)  </span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">'patents'</span>].astype(<span class="bu">float</span>)                  </span>
@@ -507,7 +507,7 @@ Model Family:                 Poisson   Df Model:                            7
 Link Function:                    Log   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:                -3258.1
 Date:                Wed, 28 May 2025   Deviance:                       2143.3
-Time:                        09:33:19   Pearson chi2:                 2.07e+03
+Time:                        09:42:37   Pearson chi2:                 2.07e+03
 No. Iterations:                     5   Pseudo R-squ. (CS):             0.1360
 Covariance Type:            nonrobust                                         
 ====================================================================================
@@ -525,7 +525,7 @@ region_Southwest     0.0506      0.047      1.072      0.284      -0.042       0
 </div>
 </div>
 <p>The Poisson regression results suggest that age, age squared, and iscustomer status are significant predictors of the number of patents held, while regional differences are not statistically significant. Specifically, age has a positive coefficient (0.149), but the negative coefficient on age_squared (−0.003) indicates a concave relationship: the expected patent count increases with age at a decreasing rate. Being a customer is associated with a ~21% increase in expected patents (exp(0.208) ≈ 1.23), and this effect is highly significant. The intercept is also significant, while all regional indicators have large p-values (p &gt; 0.28), suggesting no strong regional differences in patent counts after accounting for other variables. The pseudo R-squared (0.136) indicates a modest fit.</p>
-<div id="17518d96" class="cell" data-execution_count="15">
+<div id="2f853be1" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>X_0 <span class="op">=</span> X.copy()</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>X_1 <span class="op">=</span> X.copy()</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>X_0[<span class="st">'iscustomer'</span>] <span class="op">=</span> <span class="dv">0</span></span>
@@ -578,7 +578,7 @@ Variable Definitions
 </div>
 </div>
 </div>
-<div id="84dde22c" class="cell" data-execution_count="16">
+<div id="e80af32d" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> airbnb.copy()  </span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'last_scraped'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'last_scraped'</span>])</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'host_since'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'host_since'</span>])</span>
@@ -593,7 +593,7 @@ Variable Definitions
 <span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.get_dummies(df, columns<span class="op">=</span>[<span class="st">'room_type'</span>], drop_first<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="c5a6fab3" class="cell" data-execution_count="17">
+<div id="67aab7fa" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>sns.histplot(df[<span class="st">'number_of_reviews'</span>], bins<span class="op">=</span><span class="dv">50</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Number of Reviews"</span>)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -606,7 +606,7 @@ Variable Definitions
 </div>
 </div>
 <p>The histogram above shows that the majority of Airbnb listings have very few reviews, with a sharp right skew. Most units have fewer than 20 reviews, and a small number of listings have over 100, suggesting that a small subset of units receives a disproportionately high number of bookings (as proxied by reviews). This kind of distribution is typical in count data and justifies the use of a Poisson model for further analysis.</p>
-<div id="88818a53" class="cell" data-execution_count="18">
+<div id="bf29a4b4" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>sns.boxplot(x<span class="op">=</span><span class="st">'room_type'</span>, y<span class="op">=</span><span class="st">'number_of_reviews'</span>, data<span class="op">=</span>airbnb)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Reviews by Room Type"</span>)</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -619,7 +619,7 @@ Variable Definitions
 </div>
 </div>
 <p>This boxplot shows the distribution of review counts across different room types. Entire homes/apartments and private rooms tend to receive more reviews on average than shared rooms, though all three room types have long upper tails indicating occasional listings with very high activity. The median number of reviews is relatively low across all categories, but shared rooms appear to have the fewest reviews overall, suggesting lower demand or usage compared to other room types.</p>
-<div id="2f360b17" class="cell" data-execution_count="19">
+<div id="75e80fb5" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'price'</span>, y<span class="op">=</span><span class="st">'number_of_reviews'</span>, data<span class="op">=</span>df)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Reviews vs Price"</span>)</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -632,7 +632,7 @@ Variable Definitions
 </div>
 </div>
 <p>This scatterplot shows a strong negative relationship between price and number of reviews, suggesting that higher-priced listings tend to receive fewer bookings,as proxied by reviews. Most listings are clustered at lower price points with higher review counts, while units priced above ~$500 see a sharp drop-off in review volume. This indicates that guests may be more price-sensitive and that extremely high-priced units are rarely booked.</p>
-<div id="6ec919b7" class="cell" data-execution_count="20">
+<div id="529a4eef" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [<span class="st">'days'</span>, <span class="st">'bathrooms'</span>, <span class="st">'bedrooms'</span>, <span class="st">'price'</span>,</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>            <span class="st">'review_scores_cleanliness'</span>, <span class="st">'review_scores_location'</span>, <span class="st">'review_scores_value'</span>,</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">'instant_bookable'</span>,</span>
@@ -653,7 +653,7 @@ Model Family:                 Poisson   Df Model:                           10
 Link Function:                    Log   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:            -4.9041e+05
 Date:                Wed, 28 May 2025   Deviance:                   8.5945e+05
-Time:                        09:33:19   Pearson chi2:                 1.18e+06
+Time:                        09:42:37   Pearson chi2:                 1.18e+06
 No. Iterations:                     6   Pseudo R-squ. (CS):             0.9655
 Covariance Type:            nonrobust                                         
 =============================================================================================
