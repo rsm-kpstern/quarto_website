@@ -1,0 +1,326 @@
+---
+title: "Machine Learning from Scratch"
+author: "Kai Stern"
+date: 06/11/2025
+---
+
+
+## 1a. K-Means
+
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+```
+
+_If you want a challenge, add your plots as an animated gif on your website so that the result looks something like [this](https://www.youtube.com/shorts/XCsoWZU9oN8)._
+
+```{python}
+#Custom kmeans algorithm function
+def kmeans_custom(X, k=3, max_iters=100, random_state=42):
+    np.random.seed(random_state)
+    n_samples, n_features = X.shape
+    
+    centroids = X[np.random.choice(n_samples, k, replace=False)]
+    history = [centroids.copy()]
+    
+    for i in range(max_iters):
+        distances = np.sqrt(((X - centroids[:, np.newaxis])**2).sum(axis=2))
+        labels = np.argmin(distances, axis=0)
+        
+        new_centroids = np.array([X[labels == j].mean(axis=0) for j in range(k)])
+        
+        if np.allclose(centroids, new_centroids):
+            break
+            
+        centroids = new_centroids
+        history.append(centroids.copy())
+    
+    return labels, centroids, history
+
+```
+
+```{python}
+#plot kmeans steps!
+def plot_kmeans_steps(X, history, k, title="K-Means Steps"):
+    fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+    axes = axes.ravel()
+    
+    steps_to_show = min(6, len(history))
+    colors = ['red', 'blue', 'green', 'purple', 'orange'][:k]
+    
+    for i in range(steps_to_show):
+        ax = axes[i]
+        
+        if i == 0:
+            ax.scatter(X[:, 0], X[:, 1], alpha=0.6, color='lightgray')
+            ax.scatter(history[i][:, 0], history[i][:, 1], c='red', marker='x', s=100, linewidths=3)
+            ax.set_title(f'Initial Centroids')
+        else:
+            distances = np.sqrt(((X - history[i-1][:, np.newaxis])**2).sum(axis=2))
+            labels = np.argmin(distances, axis=0)
+            
+            for j in range(k):
+                mask = labels == j
+                ax.scatter(X[mask, 0], X[mask, 1], c=colors[j], alpha=0.6, label=f'Cluster {j+1}')
+            
+            ax.scatter(history[i][:, 0], history[i][:, 1], c='black', marker='x', s=100, linewidths=3)
+            ax.set_title(f'Step {i}')
+        
+        ax.set_xlabel('Bill Length (mm)')
+        ax.set_ylabel('Flipper Length (mm)')
+        ax.grid(True, alpha=0.3)
+    
+    for i in range(steps_to_show, 6):
+        axes[i].set_visible(False)
+        
+    plt.tight_layout()
+    plt.suptitle(title, y=1.02, fontsize=16)
+    plt.show()
+```
+
+```{python}
+#Helper functions to calculate metrics and compare 
+#custom vs scikit learn kmeans outcomes
+def calculate_wcss(X, labels, centroids):
+    wcss = 0
+    for i in range(len(centroids)):
+        cluster_points = X[labels == i]
+        if len(cluster_points) > 0:
+            wcss += np.sum((cluster_points - centroids[i])**2)
+    return wcss
+
+def analyze_clusters(X):
+    k_range = range(2, 8)
+    wcss_scores = []
+    silhouette_scores = []
+    
+    for k in k_range:
+        labels, centroids, _ = kmeans_custom(X, k=k, random_state=42)
+        wcss = calculate_wcss(X, labels, centroids)
+        wcss_scores.append(wcss)
+        sil_score = silhouette_score(X, labels)
+        silhouette_scores.append(sil_score)
+    
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+    
+    ax1.plot(k_range, wcss_scores, 'bo-', linewidth=2, markersize=8)
+    ax1.set_xlabel('Number of Clusters (k)')
+    ax1.set_ylabel('Within-Cluster Sum of Squares')
+    ax1.set_title('Elbow Method for Optimal k')
+    ax1.grid(True, alpha=0.3)
+    
+    ax2.plot(k_range, silhouette_scores, 'ro-', linewidth=2, markersize=8)
+    ax2.set_xlabel('Number of Clusters (k)')
+    ax2.set_ylabel('Silhouette Score')
+    ax2.set_title('Silhouette Analysis')
+    ax2.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.show()
+    
+    return wcss_scores, silhouette_scores
+```
+
+```{python}
+def compare_implementations(X):
+    k = 3
+    
+    labels_custom, centroids_custom, _ = kmeans_custom(X, k=k, random_state=42)
+    
+    kmeans_sklearn = KMeans(n_clusters=k, random_state=42, n_init=10)
+    kmeans_sklearn.fit(X)
+    
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+    colors = ['red', 'blue', 'green']
+    
+    for i in range(k):
+        mask = labels_custom == i
+        ax1.scatter(X[mask, 0], X[mask, 1], c=colors[i], alpha=0.6, label=f'Cluster {i+1}')
+    ax1.scatter(centroids_custom[:, 0], centroids_custom[:, 1], c='black', marker='x', s=100, linewidths=3)
+    ax1.set_title('Custom K-Means')
+    ax1.set_xlabel('Bill Length (mm)')
+    ax1.set_ylabel('Flipper Length (mm)')
+    ax1.legend()
+    ax1.grid(True, alpha=0.3)
+    
+    for i in range(k):
+        mask = kmeans_sklearn.labels_ == i
+        ax2.scatter(X[mask, 0], X[mask, 1], c=colors[i], alpha=0.6, label=f'Cluster {i+1}')
+    ax2.scatter(kmeans_sklearn.cluster_centers_[:, 0], kmeans_sklearn.cluster_centers_[:, 1], c='black', marker='x', s=100, linewidths=3)
+    ax2.set_title('Sklearn K-Means')
+    ax2.set_xlabel('Bill Length (mm)')
+    ax2.set_ylabel('Flipper Length (mm)')
+    ax2.legend()
+    ax2.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.show()
+
+```
+
+```{python}
+#load data and run analyses on it
+df = sns.load_dataset('penguins')
+df_clean = df.dropna(subset=['bill_length_mm', 'flipper_length_mm'])
+X = df_clean[['bill_length_mm', 'flipper_length_mm']].values
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+labels, centroids, history = kmeans_custom(X_scaled, k=3, random_state=42)
+plot_kmeans_steps(X_scaled, history, 3, "K-Means Algorithm Steps")
+```
+
+The sequence of panels, from “Initial Centroids” through “Step 5,” illustrates the core assign–update loop of the K-Means algorithm applied to bill length and flipper length measurements in the Palmer Penguin dataset. Initially, three centroids are placed arbitrarily among the unlabelled observations. In each subsequent iteration, data points are reallocated to the nearest centroid and the centroids are recomputed as the means of their assigned points. By Steps 3 and 4, cluster membership stabilizes and the migratory adjustments of the centroids diminish. The final panel demonstrates convergence: no observations change cluster assignment, and the centroids reside at the centers of their respective red, green, and blue clusters, confirming the correctness of the custom implementation’s iterative procedure.
+
+```{python}
+wcss, silhouette = analyze_clusters(X_scaled)
+```
+
+The WCSS (Within-Cluster Sum of Squares) curve declines sharply from 247.02 at K=2 to 157.82 at
+K=3, thereafter exhibiting a pronounced “elbow” that signals diminishing marginal gains in compactness for K>3. In contrast, the average silhouette coefficient attains its maximum of 0.543 at K=2 and steadily decreases thereafter, reaching a nadir near 0.389 at K=6 before a minor uptick at K=7. Together, these diagnostic plots suggest a trade-off between intra-cluster cohesion and inter-cluster separation: two clusters maximize separation, whereas three clusters balance compactness and parsimony most effectively.
+
+```{python}
+compare_implementations(X_scaled)
+
+print("Results Summary:")
+for k, (w, s) in enumerate(zip(wcss, silhouette), 2):
+    print(f"k={k}: WCSS={w:.2f}, Silhouette={s:.3f}")
+```
+
+Overlaying the custom K-Means solution with scikit-learn’s KMeans for K=3 reveals near‐identical partitionings: point assignments and centroid locations coincide, thereby validating the fidelity of the bespoke algorithm. The accompanying summary table reports WCSS values decreasing monotonically from 247.02 (K=2) to 66.87 (K=7), while silhouette scores decline from 0.543 to 0.389 across the same range. From an analytical standpoint, if the objective is maximal cluster separation, a bi-cluster solution is theoretically optimal; however, when interpretive granularity is paramount, the elbow at K=3 justifies a three-cluster segmentation as the most defensible compromise.
+
+## 2a. K Nearest Neighbors
+```{python}
+#Set up the data in python
+np.random.seed(42)
+n = 100
+x1 = np.random.uniform(-3, 3, n)
+x2 = np.random.uniform(-3, 3, n)
+boundary = np.sin(4 * x1) + x1
+y = (x2 > boundary).astype(int)
+dat = pd.DataFrame({"x1": x1, "x2": x2, "y": y})
+dat["y"] = dat["y"].astype("category")
+
+plt.figure(figsize=(10, 6))
+colors = ['red', 'blue']
+for i in range(2):
+    mask = dat['y'] == i
+    plt.scatter(dat[mask]['x1'], dat[mask]['x2'], c=colors[i], alpha=0.7, label=f'y={i}')
+
+x1_boundary = np.linspace(-3, 3, 200)
+boundary_line = np.sin(4 * x1_boundary) + x1_boundary
+plt.plot(x1_boundary, boundary_line, 'k--', linewidth=2, label='Boundary')
+plt.xlabel('x1')
+plt.ylabel('x2')
+plt.title('Training Data with Wiggly Boundary')
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.show()
+
+np.random.seed(123)
+n_test = 100
+x1_test = np.random.uniform(-3, 3, n_test)
+x2_test = np.random.uniform(-3, 3, n_test)
+boundary_test = np.sin(4 * x1_test) + x1_test
+y_test = (x2_test > boundary_test).astype(int)
+test_dat = pd.DataFrame({"x1": x1_test, "x2": x2_test, "y": y_test})
+
+#Test data
+plt.figure(figsize=(10, 6))
+colors = ['red', 'blue']
+for i in range(2):
+    mask = test_dat['y'] == i
+    plt.scatter(test_dat[mask]['x1'], test_dat[mask]['x2'], c=colors[i], alpha=0.7, label=f'y={i}')
+
+x1_boundary = np.linspace(-3, 3, 200)
+boundary_line = np.sin(4 * x1_boundary) + x1_boundary
+plt.plot(x1_boundary, boundary_line, 'k--', linewidth=2, label='Boundary')
+plt.xlabel('x1')
+plt.ylabel('x2')
+plt.title('Test Data with Wiggly Boundary')
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.show()
+```
+
+The training‐set visualization depicts 100 synthetic observations colored according to the binary label y
+y. A sinusoidal decision boundary is overlaid as a dashed curve. Points above the curve are marked in blue and those below in red revealing a highly non‐linear separation and substantial class interleaving near the inflection points. This plot confirms that the dataset embodies a challenging classification problem, one in which local neighborhood structure is critical.
+
+The test‐set plot applies the same boundary and coloring scheme to 100 novel points drawn under a different random seed. It illustrates the generalization challenge: although the sinusoidal frontier remains fixed, new observations cluster differently, producing both congruent regions of color and scattered misclassified points when compared to a fitted classifier. This overlay highlights how a KNN rule—especially at small k must adapt to local fluctuations in data density to approximate the true wiggly boundary on unseen data.
+
+```{python}
+#perform kmeans on the setup data
+def euclidean_distance(x1, x2):
+    return np.sqrt(np.sum((x1 - x2)**2, axis=1))
+
+def knn_predict(X_train, y_train, X_test, k):
+    predictions = []
+    
+    for test_point in X_test:
+        distances = euclidean_distance(X_train, test_point)
+        k_indices = np.argsort(distances)[:k]
+        k_nearest_labels = y_train[k_indices]
+        prediction = np.bincount(k_nearest_labels).argmax()
+        predictions.append(prediction)
+    
+    return np.array(predictions)
+
+X_train = dat[['x1', 'x2']].values
+y_train = dat['y'].values.astype(int)
+X_test = test_dat[['x1', 'x2']].values
+y_test_true = test_dat['y'].values
+
+k_values = range(1, 31)
+accuracies_custom = []
+accuracies_sklearn = []
+
+for k in k_values:
+    y_pred_custom = knn_predict(X_train, y_train, X_test, k)
+    accuracy_custom = accuracy_score(y_test_true, y_pred_custom)
+    accuracies_custom.append(accuracy_custom)
+    
+    knn_sklearn = KNeighborsClassifier(n_neighbors=k)
+    knn_sklearn.fit(X_train, y_train)
+    y_pred_sklearn = knn_sklearn.predict(X_test)
+    accuracy_sklearn = accuracy_score(y_test_true, y_pred_sklearn)
+    accuracies_sklearn.append(accuracy_sklearn)
+
+plt.figure(figsize=(12, 6))
+plt.plot(k_values, [acc * 100 for acc in accuracies_custom], 'bo-', label='Custom KNN', linewidth=2, markersize=6)
+plt.plot(k_values, [acc * 100 for acc in accuracies_sklearn], 'ro--', label='Sklearn KNN', linewidth=2, markersize=6)
+plt.xlabel('k (Number of Neighbors)')
+plt.ylabel('Accuracy (%)')
+plt.title('KNN Accuracy vs k')
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.xticks(range(1, 31, 2))
+plt.show()
+
+best_k = k_values[np.argmax(accuracies_custom)]
+best_accuracy = max(accuracies_custom) * 100
+
+print(f"Optimal k: {best_k}")
+print(f"Best accuracy: {best_accuracy:.2f}%")
+print(f"Custom vs Sklearn match: {np.allclose(accuracies_custom, accuracies_sklearn)}")
+```
+
+The accuracy curve shows that both the hand-coded and scikit-learn KNN classifiers achieve identical performance across all neighbor counts, confirming the correctness of the custom implementation. Classification accuracy peaks at 95 % when k=1, then falls to 91–93 % for small odd values of k, dips further to around 90 % for k≈9 and again near 17, and reaches a minimum of 89 % at k=27. This pattern exemplifies the bias–variance trade-off inherent in KNN: k=1 yields high variance but captures local structure most faithfully (thus highest accuracy on this test set), while larger k values smooth over local fluctuations, increasing bias and reducing accuracy. Consequently, the plot identifies k=1 as the optimal choice for this particular boundary-defined dataset under raw accuracy.
+
+
+
+
+
+
+
+
+
+
