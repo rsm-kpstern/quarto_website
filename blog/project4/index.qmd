@@ -20,8 +20,6 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 ```
 
-_If you want a challenge, add your plots as an animated gif on your website so that the result looks something like [this](https://www.youtube.com/shorts/XCsoWZU9oN8)._
-
 ```{python}
 #Custom kmeans algorithm function
 def kmeans_custom(X, k=3, max_iters=100, random_state=42):
