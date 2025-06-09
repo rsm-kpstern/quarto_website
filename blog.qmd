@@ -5,6 +5,7 @@ listing:
     - blog/project1/index.qmd
     - blog/project2/index.qmd
     - blog/project3/mnl.qmd
+    - blog/project4/index.qmd
   type: grid
   sort: "date desc"
   categories: false
